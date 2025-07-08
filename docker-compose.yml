@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./taskcraft-client
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+
+  backend:
+    build: ./taskcraft-server
+    ports:
+      - '5002:5000'
+    env_file:
+      - ./taskcraft-server/.env
