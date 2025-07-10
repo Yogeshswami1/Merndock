@@ -22,7 +22,7 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh ${{ secrets.EC2_HOST }} << 'EOF'
+          ssh ${{ secrets.EC2HOST }} << 'EOF'
             cd /var/www/html/Merndock
             git pull origin main
             sudo docker-compose down
