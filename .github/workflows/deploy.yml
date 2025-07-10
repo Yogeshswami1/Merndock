@@ -25,6 +25,8 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@13.233.119.149 "
+              git config --global --add safe.directory /var/www/html/frontend &&
+
           cd /var/www/html/frontend &&
           git pull origin main &&
           sudo docker-compose down &&
