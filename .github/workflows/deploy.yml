@@ -24,7 +24,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2HOST }} << 'EOF'
             cd /var/www/html/Merndock
-            sudo git pull origin main
+            git reset --hard
+            git pull origin main
+            git log -1  
             sudo docker-compose down
             sudo docker-compose build --no-cache frontend
             sudo docker image prune -a -f
