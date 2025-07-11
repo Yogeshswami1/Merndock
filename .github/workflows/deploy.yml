@@ -26,10 +26,8 @@ jobs:
             echo "✅ Connected to EC2"
             cd /var/www/html/Merndock
 
-            echo "🧼 Fixing ownership..."
-            sudo chown -R ubuntu:ubuntu .
-
             echo "📦 Pulling latest code..."
+            sudo chown -R ubuntu:ubuntu .
             sudo -u ubuntu git fetch origin
             sudo -u ubuntu git reset --hard origin/main
 
