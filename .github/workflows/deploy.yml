@@ -49,5 +49,5 @@ jobs:
             echo "🚀 Starting updated app..."
             sudo docker-compose up -d --build
 
-            echo "✅ Deployment finished."
+            echo "✅ Deployment finished!"
           EOF
