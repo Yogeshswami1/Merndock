@@ -13,32 +13,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $(echo "${{ secrets.EC2HOST }}" | cut -d'@' -f2) >> ~/.ssh/known_hosts
-
-      - name: Deploy via SSH
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2HOST }} << 'EOF'
+      - name: Deploy via SSH to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2KEY }}
+          script: |
             echo "✅ Connected to EC2"
+
             cd /var/www/html/Merndock
 
             echo "📦 Pulling latest code..."
             sudo chown -R ubuntu:ubuntu .
-            sudo -u ubuntu git fetch origin
-            sudo -u ubuntu git reset --hard origin/main
+            git fetch origin
+            git reset --hard origin/main
 
             echo "🔍 Latest commit:"
-            sudo -u ubuntu git log -1
+            git log -1
 
             echo "🧹 Stopping Docker..."
             sudo docker-compose down
             sudo docker-compose rm -f frontend backend
 
-            echo "🧱 Cleaning up..."
+            echo "🧱 Pruning old Docker images..."
             sudo docker image prune -a -f
 
             echo "🚧 Rebuilding app..."
@@ -47,5 +45,4 @@ jobs:
             echo "🚀 Starting updated app..."
             sudo docker-compose up -d --build
 
-            echo "✅ Deployment finished!"
-          EOF
+            echo "✅ Deployment complete!"
