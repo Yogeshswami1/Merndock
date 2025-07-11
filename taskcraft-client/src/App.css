@@ -1,49 +1,58 @@
-/* Make full height container and center content */
 .todo-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  background-color: #f0f2f5; /* subtle background */
-  padding: 40px 16px;
+  padding: 40px 20px;
+  min-height: calc(100vh - 64px); /* Header height adjust */
+  background: #f0f2f5;
 }
 
-/* Card styling */
 .todo-card {
   background: #fff;
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 600px;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
-/* On hover, slightly lift the card */
 .todo-card:hover {
-  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Scrollable task list */
 .ant-list {
   max-height: 400px;
   overflow-y: auto;
-  margin-top: 20px;
+  border-radius: 8px;
 }
 
-/* Primary button style */
+.ant-list-item {
+  transition: background 0.2s ease;
+}
+
+.ant-list-item:hover {
+  background: #f9f9f9;
+}
+
 .todo-card .ant-btn-primary {
-  background-color: #1890ff;
-  border-color: #1890ff;
-  transition: background 0.3s ease;
+  background: #1890ff;
 }
 
 .todo-card .ant-btn-primary:hover {
-  background-color: #40a9ff;
-  border-color: #40a9ff;
+  background: #40a9ff;
 }
 
-/* Text alignment clean-up */
 .ant-typography {
-  flex-grow: 1;
+  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ant-input {
+  font-size: 16px;
+}
+
+.ant-segmented {
+  font-size: 14px;
+  width: 100%;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Layout, Input, Button, List, Typography, Checkbox, Space, message, Segmented } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-
+import "./App.css"
 const { Header, Content } = Layout;
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -93,7 +93,7 @@ const App = () => {
   return (
     <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <Header style={{ color: '#fff', fontSize: '24px', textAlign: 'center' }}>
-        TaskCraft - ToDo App
+        TaskCraft - ToDo App ddd
       </Header>
 
       <Content className="todo-container">
