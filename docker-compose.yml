@@ -2,11 +2,14 @@ version: '3'
 
 services:
   frontend:
-    build: ./taskcraft-client
+    build:
+      context: ./taskcraft-client
+      dockerfile: Dockerfile
     ports:
       - '3000:80'
     depends_on:
       - backend
+    restart: always
 
   backend:
     build: ./taskcraft-server
@@ -14,3 +17,4 @@ services:
       - '5002:5000'
     env_file:
       - ./taskcraft-server/.env
+    restart: always
