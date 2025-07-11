@@ -22,17 +22,32 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2HOST }} "
+            set -e
+            echo '✅ Connected to EC2'
+
             cd /var/www/html/Merndock
-            echo "=== [BEFORE GIT PULL] ==="
+
+            echo '📦 Pulling latest code...'
+            git reset --hard
+            git fetch origin
+            git reset --hard origin/main
+
+            echo '🔍 Latest commit:'
             git log -1
-            sudo -u ubuntu git fetch origin
-            sudo -u ubuntu git reset --hard origin/main
-            echo "=== [AFTER GIT PULL] ==="
-            git log -1
+
+            echo '🧹 Stopping & cleaning Docker...'
             sudo docker-compose down
-            sudo docker-compose build --no-cache frontend
+            sudo docker-compose rm -f frontend backend
+
+            echo '🧱 Pruning old images...'
             sudo docker image prune -a -f
+
+            echo '🚧 Rebuilding containers...'
             sudo docker-compose build --no-cache
-            sudo docker-compose up --build -d
-          EOF
+
+            echo '🚀 Starting updated app...'
+            sudo docker-compose up -d --build
+
+            echo '✅ Deployment complete!'
+          "
